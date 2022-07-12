@@ -1,0 +1,36 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overwolf Proxy</title>
+  </head>
+  <body>
+    <p><%= content %></p>
+  </body>
+  <script>
+    console.log("JS loaded", window.location.href);
+    window.removeEventListener("message", () => {});
+    const content = document.querySelector("p").innerText;
+    console.log("content", content);
+
+    window.addEventListener(
+      "message",
+      (event) => {
+        console.log("received message from parent iframe", event, event.data);
+        if (event.origin === "http://127.0.0.1:5000") {
+          event.source.postMessage(decodeURIComponent(content), event.origin);
+        }
+      },
+      false
+    );
+    console.log("REF IFRAME", window.location.href);
+    setTimeout(() => {
+      postMessage("ok loaded 1", "*");
+      postMessage(
+        "ok loaded 2",
+        "overwolf-extension://dkpppanigohiilnkdecgnkoailiifdekglpnalpg"
+      );
+    }, 1000 * 20);
+  </script>
+</html>
