@@ -26,8 +26,8 @@
     );
     console.log("REF IFRAME", window.location.href);
     setTimeout(() => {
-      postMessage("ok loaded 1", "*");
-      postMessage(
+      parent.postMessage("ok loaded 1", "*");
+      parent.postMessage(
         "ok loaded 2",
         "overwolf-extension://dkpppanigohiilnkdecgnkoailiifdekglpnalpg"
       );
